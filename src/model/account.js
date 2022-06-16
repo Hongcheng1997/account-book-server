@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize");
 module.exports = ({ sequelize }) => {
   return sequelize.define("account", {
     account: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     type: {

@@ -11,7 +11,7 @@ app.use(bodyParser());
 
 initDataBase(router);
 
-app.use(cors());
+app.use(cors({ credentials: true }));
 
 app.use(router.routes()).use(router.allowedMethods());
 

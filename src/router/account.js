@@ -4,15 +4,15 @@ module.exports = ({ router, models }) => {
   const { Account } = models;
 
   router.post("/account/create", async (ctx) => {
-    const { account, type, date, userId } = ctx.request.body;
-    const { token } = ctx.header;
+    const { account, type, date } = ctx.request.body;
+    const token = ctx.cookies.get("identify_token");
     try {
-      jwt.verify(token, "secret");
+      const userInfo = jwt.verify(token, "secret");
       await Account.create({
         account,
         type,
         date,
-        userId,
+        userId: userInfo.userId,
       });
 
       ctx.body = {
@@ -35,7 +35,7 @@ module.exports = ({ router, models }) => {
   });
 
   router.get("/account/list", async (ctx) => {
-    const { token } = ctx.header;
+    const token = ctx.cookies.get("identify_token");
     try {
       const userInfo = jwt.verify(token, "secret");
       const list = await Account.findAll({

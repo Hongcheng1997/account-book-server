@@ -19,30 +19,19 @@ module.exports = ({ router, models }) => {
         password: "123456",
       },
     });
-    const token = jwt.sign(
-      { userId: user.id, exp: Math.floor(Date.now() / 1000) + 60 * 60 },
-      "secret"
-    );
+    const exp = Math.floor(Date.now() / 1000) + 60 * 60;
+    const token = jwt.sign({ userId: user.id, exp }, "secret");
 
-    if (created) {
-      ctx.body = {
-        message: "ok",
-        status: 200,
-        body: `${token}`,
-      };
-    } else {
-      if (user.password === password) {
-        ctx.body = {
-          message: "ok",
-          status: 200,
-          body: `${token}`,
-        };
-      } else {
-        ctx.body = {
-          message: "password err",
-          status: 500,
-        };
-      }
+    if (user.password !== password) {
+      ctx.throw(500, "password err");
+      return;
     }
+    ctx.cookies.set("identify_token", token, {
+      expires: new Date(exp * 1000),
+    });
+    ctx.body = {
+      message: "ok",
+      status: 200,
+    };
   });
 };
