@@ -17,20 +17,14 @@ module.exports = ({ router, models }) => {
 
       ctx.body = {
         message: "ok",
-        status: 200,
+        success: true,
       };
     } catch (error) {
-      if (error.expiredAt) {
-        ctx.body = {
-          message: "登陆已过期",
-          status: 401,
-        };
-      } else {
-        ctx.body = {
-          message: "unkown err",
-          status: 500,
-        };
-      }
+     if (error.expiredAt) {
+       ctx.throw(401, "登陆已过期");
+     } else {
+       ctx.throw(500, "unkown error");
+     }
     }
   });
 
@@ -44,20 +38,14 @@ module.exports = ({ router, models }) => {
 
       ctx.body = {
         message: "ok",
-        status: 200,
+        success: true,
         body: list,
       };
     } catch (error) {
       if (error.expiredAt) {
-        ctx.body = {
-          message: "登陆已过期",
-          status: 401,
-        };
+        ctx.throw(401, "登陆已过期");
       } else {
-        ctx.body = {
-          message: "unkown err",
-          status: 500,
-        };
+        ctx.throw(500, "unkown error");
       }
     }
   });

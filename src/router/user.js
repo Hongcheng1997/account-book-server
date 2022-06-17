@@ -23,7 +23,10 @@ module.exports = ({ router, models }) => {
     const token = jwt.sign({ userId: user.id, exp }, "secret");
 
     if (user.password !== password) {
-      ctx.throw(500, "password err");
+      ctx.body = {
+        message: "密码错误",
+        success: false,
+      };
       return;
     }
     ctx.cookies.set("identify_token", token, {
@@ -31,7 +34,8 @@ module.exports = ({ router, models }) => {
     });
     ctx.body = {
       message: "ok",
-      status: 200,
+      success: true,
+      body: { created },
     };
   });
 };
