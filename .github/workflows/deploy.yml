@@ -31,9 +31,11 @@ jobs:
           host: ${{ secrets.ALIYUN_SERVER_HOST }}
           username: ${{ secrets.ALIYUN_REMOTE_USER }}
           key: ${{ secrets.ALIYUN_SERVER_ACCESS_TOKEN }}
+          envs:
           script: |
             cd /var/www/account-book-server
-            USERNAME=${{ secrets.username }}
-            PASSWORD=${{ secrets.password }}
-            DATABASE=${{ secrets.database }}
-            pm2 reload index
+            USERNAME=${{ secrets.USERNAME }}
+            PASSWORD=${{ secrets.PASSWORD }}
+            DATABASE=${{ secrets.DATABASE }}
+            echo $USERNAME
+            pm2 reload dist/index.js --name account-book-server
