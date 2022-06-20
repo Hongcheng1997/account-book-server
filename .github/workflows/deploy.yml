@@ -4,8 +4,9 @@
 name: Node.js Package
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -15,7 +16,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: pnpm install
+      - run: npm install
       - run: npm run build
       - uses: easingthemes/ssh-deploy@v2.1.5
         env:
