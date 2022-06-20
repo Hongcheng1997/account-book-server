@@ -1,5 +1,0 @@
-language: node_js
-node_js:
-  - '16.15.1'
-before_script: pnpm install
-script: npm run start
