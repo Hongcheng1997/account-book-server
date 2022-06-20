@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index"
+    "start": "node src/index",
+    "build": "node build.mjs"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "esbuild": "^0.14.46",
+    "globby": "^13.1.2",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
