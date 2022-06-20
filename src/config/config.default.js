@@ -1,9 +1,9 @@
 module.exports = {
   port: 3000,
   mysql: {
-    username: process.env.USERNAME || "root",
-    password: process.env.PASSWORD || null,
-    database: process.env.DATABASE || "sequelize-example",
+    username: "root",
+    password: "12345678",
+    database: "account-book",
     host: "localhost",
     dialect: "mysql",
   },

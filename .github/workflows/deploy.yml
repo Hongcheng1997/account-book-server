@@ -34,8 +34,4 @@ jobs:
           envs:
           script: |
             cd /var/www/account-book-server
-            USERNAME=${{ secrets.USERNAME }}
-            PASSWORD=${{ secrets.PASSWORD }}
-            DATABASE=${{ secrets.DATABASE }}
-            echo $USERNAME
             pm2 reload dist/index.js --name account-book-server

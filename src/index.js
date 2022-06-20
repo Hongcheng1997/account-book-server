@@ -21,3 +21,5 @@ app.use(router.routes()).use(router.allowedMethods());
 app.listen(config.port, () => {
   console.log(`\nlisten port ${config.port}`);
 });
+
+console.log(process.env, "process.env");
