@@ -6,7 +6,7 @@ module.exports = ({ router, models }) => {
   const { Account } = models;
 
   router.post("/account/create", async (ctx) => {
-    const { account, type, date } = ctx.request.body;
+    const { account, type, date, remark } = ctx.request.body;
     const token = ctx.cookies.get("identify_token");
     const userInfo = jwt.verify(token, "secret");
     await Account.create({
@@ -14,6 +14,7 @@ module.exports = ({ router, models }) => {
       type,
       date,
       userId: userInfo.userId,
+      remark,
     });
 
     ctx.body = {

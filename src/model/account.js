@@ -18,5 +18,9 @@ module.exports = ({ sequelize }) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    remark: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   });
 };

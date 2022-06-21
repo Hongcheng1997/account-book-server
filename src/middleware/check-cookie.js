@@ -8,6 +8,7 @@ module.exports = () => {
         jwt.verify(token, "secret");
         await next();
       } catch (error) {
+        console.log(error)
         ctx.status = 401;
         ctx.body = {
           message: '登陆已过期',
