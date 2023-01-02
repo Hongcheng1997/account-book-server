@@ -2,7 +2,7 @@ module.exports = {
   port: 3000,
   mysql: {
     username: "root",
-    password: "12345678",
+    password: "LK>o--w:h1&I",
     database: "account-book",
     host: "localhost",
     dialect: "mysql",

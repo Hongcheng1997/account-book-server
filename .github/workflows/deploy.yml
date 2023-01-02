@@ -33,5 +33,5 @@ jobs:
           key: ${{ secrets.ALIYUN_SERVER_ACCESS_TOKEN }}
           envs:
           script: |
-            cd /var/www/account-book-server
+            cd /root/account-book-server
             pm2 reload dist/index.js --name account-book-server
