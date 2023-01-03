@@ -54,7 +54,7 @@ module.exports = ({ router, models }) => {
     });
 
     const total = list.reduce((sum, item) => {
-      return item.account + sum;
+      return +item.account + sum;
     }, 0);
 
     ctx.body = {
