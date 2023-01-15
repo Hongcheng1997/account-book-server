@@ -60,7 +60,7 @@ module.exports = ({ router, models }) => {
     ctx.body = {
       message: "ok",
       success: true,
-      body: { total },
+      body: { total: Math.trunc(total) },
     };
   });
 };
