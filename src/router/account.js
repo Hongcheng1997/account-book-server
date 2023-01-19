@@ -3,15 +3,22 @@ const { Sequelize } = require("sequelize");
 const Op = Sequelize.Op;
 
 module.exports = ({ router, models }) => {
-  const { Account } = models;
+  const { Account, ExpenseType } = models;
 
   router.post("/account/create", async (ctx) => {
-    const { account, type, date, remark } = ctx.request.body;
+    const { account, typeId, date, remark } = ctx.request.body;
     const token = ctx.cookies.get("identify_token");
     const userInfo = jwt.verify(token, "secret");
+    const value = await ExpenseType.findOne({
+      where: {
+        id: typeId,
+      },
+    });
+
     await Account.create({
       account,
-      type,
+      type: value.type,
+      typeId,
       date,
       userId: userInfo.userId,
       remark,
