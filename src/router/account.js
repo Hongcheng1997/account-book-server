@@ -33,9 +33,13 @@ module.exports = ({ router, models }) => {
   router.get("/account/list", async (ctx) => {
     const token = ctx.cookies.get("identify_token");
     const userInfo = jwt.verify(token, "secret");
+    const { startTime, endTime } = ctx.query;
     const list = await Account.findAll({
       where: {
         userId: userInfo.userId,
+        date: {
+          [Op.between]: [startTime, endTime],
+        },
       },
       order: [["date", "DESC"]],
     });
@@ -68,6 +72,27 @@ module.exports = ({ router, models }) => {
       message: "ok",
       success: true,
       body: { total: Math.trunc(total) },
+    };
+  });
+
+  router.get("/account/getDateList", async (ctx) => {
+    const token = ctx.cookies.get("identify_token");
+    const userInfo = jwt.verify(token, "secret");
+    const list = await Account.findAll({
+      where: {
+        userId: userInfo.userId,
+      },
+    });
+
+    const dateList = list.map(item => {
+      const date = item.date.split('-')
+      return `${date[0]}-${date[1]}`
+    });
+
+    ctx.body = {
+      message: "ok",
+      success: true,
+      body: { list: Array.from(new Set(dateList)) },
     };
   });
 };
