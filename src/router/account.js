@@ -84,15 +84,27 @@ module.exports = ({ router, models }) => {
       },
     });
 
-    const dateList = list.map(item => {
+    const dateMap = new Map()
+    list.forEach(item => {
       const date = item.date.split('-')
-      return `${date[0]}-${date[1]}`
+      const key = `${date[0]}-${date[1]}`
+      const value = dateMap.get(key) || 0
+      dateMap.set(key, value + +item.account)
     });
+
+    const dateList = []
+
+    for (let item of dateMap.entries()) {
+      dateList.push({
+        date: item[0],
+        sum: item[1],
+      })
+    }
 
     ctx.body = {
       message: "ok",
       success: true,
-      body: { list: Array.from(new Set(dateList)) },
+      body: { list: dateList },
     };
   });
 };
