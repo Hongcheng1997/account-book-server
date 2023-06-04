@@ -23,7 +23,7 @@ module.exports = ({ router, models }) => {
             const valueByFid = map.get(item.fid)
             if (valueByFid) {
                 map.set(item.fid, {
-                    label: valueByFid.text,
+                    label: valueByFid.label,
                     value: valueByFid.value,
                     children: [...valueByFid.children, { label: item.type, value: item.id }]
                 })
