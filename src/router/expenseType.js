@@ -20,18 +20,19 @@ module.exports = ({ router, models }) => {
         const map = new Map()
 
         list.forEach(item => {
-            const valueByFid = map.get(item.fid)
-            if (valueByFid) {
+            if (item.fid) {
+                const valueByFid = map.get(item.fid) || { children: [] }
                 map.set(item.fid, {
                     label: valueByFid.label,
                     value: valueByFid.value,
                     children: [...valueByFid.children, { label: item.type, value: item.id }]
                 })
-            } else if (!item.fid) {
+            } else {
+                const valueByFid = map.get(item.id) || { children: [] }
                 map.set(item.id, {
                     label: item.type,
                     value: item.id,
-                    children: []
+                    children: [...valueByFid.children]
                 })
             }
         })

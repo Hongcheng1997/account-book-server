@@ -14,7 +14,7 @@ initDataBase(router);
 
 app.use(cors({ credentials: true }));
 
-app.use(checkCookie());
+// app.use(checkCookie());
 
 app.use(router.routes()).use(router.allowedMethods());
 
