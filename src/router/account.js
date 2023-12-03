@@ -87,7 +87,7 @@ module.exports = ({ router, models }) => {
       where: {
         userId: 1,
         date: {
-          [Op.between]: [startTime, endTime],
+          [Op.between]: [new Date(startTime), new Date(endTime)],
         },
       },
     });
