@@ -9,13 +9,18 @@ module.exports = ({ router, models }) => {
     const { account, typeId, date, remark } = ctx.request.body;
     // const token = ctx.cookies.get("identify_token");
     // const userInfo = jwt.verify(token, "secret");
-    const value = await ExpenseType.findOne({
+    const type = await ExpenseType.findOne({
       where: {
         id: typeId,
       },
     });
+    const ftype = await ExpenseType.findOne({
+      where: {
+        id: type.fid,
+      },
+    });
 
-    if (!value.fid) {
+    if (!type.fid) {
       ctx.body = {
         message: "none",
         success: false,
@@ -25,7 +30,9 @@ module.exports = ({ router, models }) => {
 
     await Account.create({
       account,
-      type: value.type,
+      type: type.type,
+      ftype: ftype.type,
+      fid: type.fid,
       typeId,
       date,
       userId: 1,
@@ -84,6 +91,9 @@ module.exports = ({ router, models }) => {
         },
       },
     });
+    const lastTime = await Account.findOne({
+      order: [['date', 'DESC']],
+    });
 
     const total = list.reduce((sum, item) => {
       return +item.account + sum;
@@ -92,7 +102,7 @@ module.exports = ({ router, models }) => {
     ctx.body = {
       message: "ok",
       success: true,
-      body: { total: Math.trunc(total) },
+      body: { total: Math.trunc(total), lastTime: +new Date(lastTime.date) + 1000*60*60*24 },
     };
   });
 
